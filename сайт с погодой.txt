@@ -1,0 +1,529 @@
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            background: linear-gradient(to right, #fbc2eb, #a6c1ee);
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 40px;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 25vh; /* Уменьшаем отступ снизу, чтобы поднять контейнер */
+}
+        .container2{
+            display: flex;
+            flex-direction: column;
+            flex-wrap:wrap;
+            gap: 20px;
+            justify-content: center;
+            align-items: center;
+            margin-top: 25vh;
+        }
+
+        .mini_box{
+            display: flex;
+            background-color: white;
+            border-radius: 20px;
+            flex-direction: column;
+            flex-wrap:wrap;
+            gap: 20px;
+            justify-content: center;
+            align-items: center;
+            width: 100px;
+            height: 100px;
+        }
+
+        .minibox{
+            
+            width: 100px;
+            height: 100px;
+        }
+
+        .box {
+            background-color: #ffffff;
+            border-radius: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            
+        }
+        .box.large {
+            width: 200px;
+            height: 250px;
+        }
+        .box.medium {
+            width: 220px;
+            height: 130px;
+        }
+        .box.small {
+            width: 100px;
+            height: 100px;
+        }
+        .box.gradient {
+            background: linear-gradient(to bottom, #f3b1e0, #9fbef5);
+        }
+        .close-btn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            font-size: 16px;
+            color: #888888;
+            cursor: pointer;
+        }
+    .close-btn-mini-boxes{
+        position: relative;
+            top: -30px;
+            right: -35px;
+            font-size: 16px;
+            color: #888888;
+            cursor: pointer;
+    }
+
+        #text{
+            color: #4fa3ca;
+            font-weight: bolder;
+            font-size: 20px;
+            position: absolute;
+            top: 44px;
+        }
+        #headerDIV {
+        background: linear-gradient(to top right,  #f4aadf, #95bcfe);
+        border-radius: 0 0 20px 20px;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+}
+
+.miniboxes {
+    position: absolute; /* Позволяет позиционировать контейнер относительно родителя */
+    bottom: 100px; /* Прикрепляем к нижней части страницы */
+    left: 50%; /* Центрируем по горизонтали */
+    transform: translateX(-50%); /* Сдвигаем влево на половину ширины контейнера */
+    display: flex; /* Используем flexbox для размещения боксов */
+    justify-content: space-around; /* Распределяем пространство между боками */
+    width: 70%; /* Ширина контейнера на всю страницу */
+    padding-bottom: 15vh; /* Добавляем отступы */
+}
+
+.left{
+    background-color: transparent;
+    color: white;
+    border: none;
+    border-radius: 15px;
+    font-weight:bolder;
+    font-size: 30px;
+    width: 50px;
+    height: 40px;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 20px;
+    margin-top: 20px;
+    margin-left: 10px;   
+}
+#exit{
+    position: sticky;
+     background-color: transparent;
+    border: none;
+    border-radius: 15px;
+    font-weight:bolder;
+    font-size: 30px;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 20px;
+    margin-top: 20px;
+    
+    
+}
+.right {
+    
+    position: relative; /* Оставляем позицию относительно */
+    left: 75%; /* Позиционирование */
+    background-color: transparent;
+    color: white;
+    border: none;
+    border-radius: 15px;
+    font-weight: bolder;
+    font-size: 30px;
+    width: 50px; /* Ширина кнопки */
+    height: 40px; /* Высота кнопки */
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 20px;
+    margin-top: 20px;
+}
+
+
+.icon {
+    position: relative;
+    width: 30px;
+    height: 30;
+    top: 4;
+}
+.woln{
+position: absolute;
+width: 100%;
+height: 100vh;
+overflow: hidden;
+}
+section .wave{
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 80px;
+    background: url(qq/wave.png);
+    background-size: 1000px 100px;
+}
+section .wave.wave1{
+    animation: animate 30s linear infinite;
+    z-index: 1000;
+    opacity: 1;
+    animation-delay: 0s;
+    bottom: 0;
+}
+section .wave.wave2{
+    animation: animate2 15s linear infinite;
+    z-index: 999;
+    opacity: 0,5;
+    animation-delay: -5s;
+    bottom: 10px;
+}
+section .wave.wave3{
+    animation: animate 30s linear infinite;
+    z-index: 998;
+    opacity: 0.2;
+    animation-delay: -2s;
+    bottom: 15;
+}
+section .wave.wave4{
+    animation: animate2 5s linear infinite;
+    z-index: 997;
+    opacity: 0,7;
+    animation-delay: -5s;
+    bottom: 20px;
+}
+@keyframes animate{
+    0%{
+        background-position-x: 0;
+    }
+    100%{
+        background-position-x: 1000px;
+    }
+}
+@keyframes animate2{
+    0%{
+        background-position-x: 0;
+    }
+    100%{
+        background-position-x: -1000px;
+    }
+}
+@media only screen and (max-width: 480px) {
+    .container {
+        flex-direction: column;
+        gap: 20px;
+    }
+    .box {
+        width: 100%;
+        height: auto;
+    }
+    .right {
+        left: 0;
+        margin-top: 10px;
+    }
+    #headerDIV {
+        padding: 10px;
+    }
+}
+
+/* For mobile phones (landscape) */
+@media only screen and (min-width: 481px) and (max-width: 767px) {
+    .container {
+        flex-direction: column;
+        gap: 20px;
+    }
+    .box {
+        width: 100%;
+        height: auto;
+    }
+    .right {
+        left: 0;
+        margin-top: 10px;
+    }
+    #headerDIV {
+        padding: 10px;
+    }
+}
+
+/* For tablets (portrait) */
+@media only screen and (min-width: 768px) and (max-width: 1024px) {
+    .container {
+        flex-wrap: wrap;
+        gap: 40px;
+    }
+    .box {
+        width: 45%;
+        height: auto;
+    }
+    .right {
+        left: 75%;
+    }
+    
+}
+
+/* For tablets (landscape) and notebooks/desktops */
+@media only screen and (min-width: 1025px) {
+    .container {
+        flex-wrap: wrap;
+        gap: 40px;
+    }
+    .box {
+        width: 30%;
+        height: auto;
+    }
+    .right {
+        left: 75%;
+    }
+    #headerDIV {
+        padding: 20px;
+    }
+}
+#closeZzz{
+    position: relative;
+    bottom: 33px;
+    left: 36px;
+    color: #888888;
+}
+.on_off{
+    position: relative;
+    width: 40;
+    top: 2;
+    right: 3;
+}
+
+
+
+.cardContainer {
+  width: fit-content;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.card {
+  position: relative;
+  width: 220px;
+  height: 250px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px 10px;
+  border-radius: 10px;
+  backdrop-filter: blur(30px);
+  background-color: rgba(65, 65, 65, 0.308);
+  border: 1px solid rgba(255, 255, 255, 0.089);
+  cursor: pointer;
+}
+
+.city {
+  font-weight: 700;
+  font-size: 0.9em;
+  letter-spacing: 1.2px;
+  color: white;
+}
+
+.weather {
+  font-weight: 500;
+  font-size: 0.7em;
+  letter-spacing: 1.2px;
+  color: rgb(197, 197, 197);
+}
+
+.temp {
+  font-size: 1.8em;
+  color: white;
+}
+
+.minmaxContainer {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.min,
+.max {
+  width: 50%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  justify-content: center;
+  padding: 0px 20px;
+  gap: 4px;
+}
+
+.max {
+  align-items: flex-start;
+  border-left: 2px solid white;
+}
+
+.maxHeading,
+.minHeading {
+  font-size: 0.7em;
+  font-weight: 600;
+  color: white;
+}
+
+.maxTemp,
+.minTemp {
+  font-size: 0.6em;
+  font-weight: 500;
+  color: rgb(197, 197, 197);
+}
+
+.cardContainer::before {
+  width: 100px;
+  height: 100px;
+  content: "";
+  position: absolute;
+  background-color: rgb(144, 161, 255);
+  z-index: -1;
+  border-radius: 50%;
+  left: 100px;
+  top: 50px;
+  transition: all 1s;
+}
+
+.cardContainer:hover::before {
+  transform: translate(-50px, 50px);
+}
+
+
+
+
+
+/*! https://techrocks.ru/2021/04/12/pure-html-and-css-background-animations/ 
+https://www.youtube.com/watch?v=pKuvi9t4D4Y
+https://www.youtube.com/watch?v=MMNEEdGa5eE
+
+*/
+
+    </style>
+</head>
+<body>
+   
+    
+    <div id="headerDIV">
+        <a class="left" id="ruEN" href="">
+            <img src="qq/web photo.png" class="icon" alt="Language">
+        </a>
+            <button type="button" id="exit">О нас</button>
+        
+            
+            <a class="right" href="autorization.html" target="_blank">
+                <img src="qq/Vector.png" alt="Icon" class="icon">
+            </a>
+            <button type="submit" class="right">
+                <img src="qq/Group.png" alt="Icon" class="icon">
+            </button>
+            <button type="submit" class="right" id="ultra_right">
+                <img src="qq/Group 1.png" alt="Icon" class="on_off">
+            </button>
+            
+
+        </div>
+    
+        
+
+    <div class="container">
+        <div class="box large">
+            <span class="close-btn">×</span>
+            <span>Прогнозы для мероприятий</span> <!--Создайте раздел, где пользователи могут вводить дату и место мероприятия, чтобы получить прогноз погоды на этот день. Это может быть полезно для планирования пикников, свадеб или других мероприятий на открытом воздухе-->
+        </div>
+
+        
+
+        <div class="container2">
+            <div class="box medium">
+                <span class="close-btn">×</span>
+                <span>Персонализированные уведомления</span> <!--Добавьте возможность подписки на уведомления о погоде. Пользователи могут получать уведомления о значительных изменениях погоды, таких как штормы или сильный дождь, что улучшает их взаимодействие с сайтом-->
+            </div>
+            <div class="container">
+                <div class="box small">
+                    <span class="close-btn">×</span>
+                </div>
+                <div class="box small">
+                    <span class="close-btn">×</span>
+                </div>
+            </div>
+        </div>
+
+        
+        
+        <div class="box large gradient">
+            <span class="close-btn">×</span>
+            <span id="text">30° degrees</span>
+        </div>
+    
+
+   
+
+<div class="miniboxes">
+
+    <div class="box small"> <!-- скопировал с класса маленького бокса -->
+        <div id="closeZzz">
+            <span >×</span>
+        </div>
+    </div>
+    <div class="box small">
+        <div id="closeZzz">
+            <span >×</span>
+        </div>
+    </div>
+    <div class="box small">
+        <div id="closeZzz">
+            <span >×</span>
+        </div>
+    </div>
+    <div class="box small">
+        <div id="closeZzz">
+            <span >×</span>
+        </div>
+    </div>
+    <div class="box small">
+        <div id="closeZzz">
+            <span >×</span>
+        </div>
+    </div>
+ </div>
+</div>
+    
+<section>
+    <div class="wave wave1"></div>
+    <div class="wave wave2"></div>
+    <div class="wave wave3"></div>
+    <div class="wave wave4"></div>
+</section>
+
+
+
+
+
+</body>
+</html>
+

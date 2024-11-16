@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <title>Authorization</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background: linear-gradient(to bottom right, #d0e7ff, #e0f7fa);
+            font-family: Arial, sans-serif;
+        }
+        .container {
+            background-color: white;
+            border-radius: 20px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            width: 350px;
+            text-align: center;
+            border: 2px solid #00f;
+            
+        }
+         
+        
+        .back-arrow {
+            height: 15px;
+            display: flex;
+            position: relative;
+        }
+        .title {
+            color: #96a7f1;;
+            font-size: 24px;
+            margin-bottom: 10px;
+            font-weight: 800;
+        }
+        .description {
+            font-size: 14px;
+            color: #bcb8b8;
+            margin-bottom: 30px;
+        }
+        .toggle-buttons button:last-child {
+            margin-right: 0; 
+        }
+        .toggle-buttons {
+    display: flex;
+    margin-bottom: 20px; /* Отступ между кнопками и полями ввода */
+}
+
+.toggle-buttons button {
+    flex: 1;
+    padding: 10px;
+    border: none;
+    border-radius: 20px;
+    font-size: 18px;
+    cursor: pointer;
+    font-weight: bold;
+    margin-right: 5px;
+    position: relative; /* Для позиционирования псевдоэлемента */
+    overflow: hidden; /* Скрыть псевдоэлемент, если он выходит за пределы кнопки */
+    transition: all 0.2s ease-in-out;
+}
+
+.toggle-buttons button::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgb(0, 205, 0, 0.2);
+    opacity: 0;
+    transition: opacity 0.7s;
+    border-radius: 20px;
+    z-index: 0;
+}
+
+.toggle-buttons button:hover::before {
+    opacity: 0.5; /* Прозрачность при наведении */
+
+}
+
+.toggle-buttons button:hover{
+    
+  transform: scale(1.03);
+  box-shadow: rgba(133, 189, 215, 0.8784313725) 0px 23px 10px -20px;
+}
+
+.toggle-buttons button:active{
+    transform: scale(0.95);
+    box-shadow: rgba(133, 189, 215, 0.8784313725) 0px 15px 10px -10px;
+}
+
+
+
+.toggle-buttons button span {
+    position: relative; /* Для текста кнопки */
+    z-index: 1; /* Текст будет над псевдоэлементом */
+}
+        .input-field {
+            width: 100%;
+            padding: 10px; 
+            margin-bottom: 20px; 
+            border: 1px solid #ccc; 
+            border-radius: 20px; 
+            font-size: 16px; 
+            margin-left: 15px;
+            width: 300px;
+        }
+        .input-field.error {
+           border-color: red; /* Красная граница для ошибок */
+        }
+.login-button {
+  display: block;
+  width: 100%;
+  font-weight: bold;
+  background: linear-gradient(45deg, rgb(16, 137, 211) 0%, rgb(18, 177, 209) 100%);
+  color: white;
+  padding-block: 15px;
+  margin: 20px auto;
+  border-radius: 20px;
+  box-shadow: rgba(133, 189, 215, 0.8784313725) 0px 20px 10px -15px;
+  border: none;
+  transition: all 0.2s ease-in-out;
+}
+.login-button:hover {
+  transform: scale(1.03);
+  box-shadow: rgba(133, 189, 215, 0.8784313725) 0px 23px 10px -20px;
+}
+
+.login-button:active {
+  transform: scale(0.95);
+  box-shadow: rgba(133, 189, 215, 0.8784313725) 0px 15px 10px -10px;
+}
+       .brand{
+        padding-bottom: 3vh;
+        font-weight: bolder;
+        font-size: 30px;
+        color: #ceff95;
+       }
+       .createAcc {
+  display: block;
+  width: 100%;
+  font-weight: bold;
+  background: linear-gradient(45deg, rgb(16, 137, 211) 0%, rgb(18, 177, 209) 100%);
+  color: white;
+  padding-block: 15px;
+  margin: 20px auto;
+  border-radius: 20px;
+  box-shadow: rgba(133, 189, 215, 0.8784313725) 0px 20px 10px -15px;
+  border: none;
+  transition: all 0.2s ease-in-out;
+}
+
+.createAcc:hover {
+  transform: scale(1.03);
+  box-shadow: rgba(133, 189, 215, 0.8784313725) 0px 23px 10px -20px;
+}
+
+.createAcc:active {
+  transform: scale(0.95);
+  box-shadow: rgba(133, 189, 215, 0.8784313725) 0px 15px 10px -10px;
+}
+.back-arrow {
+           cursor: pointer;
+           margin-bottom: 20px;
+       }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="back-arrow" onclick="goBack()">
+            <img src="/qq/EXIT.png" alt="Назад" >
+        </div>
+    <div class="brand">meteo-info</div>
+    <div class="title">Авторизация</div>
+    <div class="description">Пожалуйста выберите метод авторизации чтобы продолжить.</div>
+    
+    <div class="toggle-buttons">
+        <button id="email-toggle" class="active"><span>Почта</span></button>
+        <button id="nickname-toggle"><span>Ник</span></button>
+    </div>
+
+    <input type="text" id="email-input" class="input-field" placeholder="Введите вашу почту" />
+    <input type="text" id="nickname-input" class="input-field" placeholder="Введите ваш ник" />
+    
+    <input type="password" id="password-input" class="input-field" placeholder="Введите пароль" />
+
+    <button class="login-button" id="login-button">Войти</button>
+
+    <button class="createAcc" id="create-account-button">Создать аккаунт</button>
+</div>
+
+<script>
+    const emailToggle = document.getElementById('email-toggle');
+    const nicknameToggle = document.getElementById('nickname-toggle');
+    
+    const emailInput = document.getElementById('email-input');
+    const nicknameInput = document.getElementById('nickname-input');
+    const passwordInput = document.getElementById('password-input');
+    
+    const loginButton = document.getElementById('login-button');
+
+    // Обработчик для кнопки "Почта"
+    emailToggle.addEventListener('click', () => {
+        emailToggle.classList.add('active');
+        nicknameToggle.classList.remove('active');
+        
+        emailInput.style.display = 'block'; // Показываем поле для почты
+        nicknameInput.style.display = 'none'; // Скрываем поле для ника
+       
+        passwordInput.style.display = 'block'; // Показываем поле для пароля
+
+        clearErrors(); // Очищаем ошибки при переключении
+    });
+
+    // Обработчик для кнопки "Ник"
+    nicknameToggle.addEventListener('click', () => {
+        nicknameToggle.classList.add('active');
+        emailToggle.classList.remove('active');
+
+        emailInput.style.display = 'none'; // Скрываем поле для почты
+        nicknameInput.style.display = 'block'; // Показываем поле для ника
+        
+        passwordInput.style.display = 'block'; // Показываем поле для пароля
+
+        clearErrors(); // Очищаем ошибки при переключении
+    });
+
+    // Валидация при нажатии на кнопку "Войти"
+    loginButton.addEventListener('click', () => {
+        clearErrors(); // Очищаем предыдущие ошибки
+
+        let isValid = true;
+
+        if (emailToggle.classList.contains('active')) {
+            if (!emailInput.value.includes('@')) {
+                emailInput.classList.add('error'); // Добавляем класс ошибки
+                alert("Пожалуйста, введите корректную почту"); // Сообщение об ошибке
+                isValid = false; // Устанавливаем флаг недействительности
+            }
+        } else if (nicknameToggle.classList.contains('active')) {
+            if (nicknameInput.value.trim() === '') { // Проверяем на пустое значение
+                nicknameInput.classList.add('error'); // Добавляем класс ошибки
+                isValid = false; // Устанавливаем флаг недействительности
+            }
+        }
+
+        if (passwordInput.value.trim() === '') { // Проверяем на пустое значение пароля
+            passwordInput.classList.add('error'); // Добавляем класс ошибки
+            isValid = false; // Устанавливаем флаг недействительности
+        }
+
+        if (isValid) {
+            alert("Успешная авторизация!"); // Здесь можно добавить логику авторизации
+        }
+    });
+
+    function clearErrors() {
+        emailInput.classList.remove('error'); // Убираем класс ошибки у поля почты
+        nicknameInput.classList.remove('error'); // Убираем класс ошибки у поля ника
+        passwordInput.classList.remove('error'); // Убираем класс ошибки у поля пароля
+    }
+
+    // Скрыть все поля ввода при загрузке страницы
+    window.onload = () => {
+        emailInput.style.display = 'none';
+        nicknameInput.style.display = 'none';
+        passwordInput.style.display = 'none';
+    };
+</script>
+
+<script>
+    const createAccountButton = document.getElementById('create-account-button');
+
+createAccountButton.addEventListener('click', async () => {
+    const email = document.getElementById('email-input').value.trim();
+    const nickname = document.getElementById('nickname-input').value.trim();
+    const password = document.getElementById('password-input').value.trim();
+
+    // Проверка валидности ввода
+    if ((email && !nickname && password) || (nickname && !email && password)) {
+        // Дополнительная проверка для почты
+        const allowedDomains = ['@rambler.com', '@bk.ru', '@mail.ru', '@yahoo.com', '@email.com', '@gmail.com'];
+        const isValidEmailDomain = allowedDomains.some(domain => email.endsWith(domain));
+
+        if (email && !isValidEmailDomain) {
+            alert("Ошибка: почта должна иметь корректный домен "); // Сообщение об ошибке
+            return; // Прерываем выполнение, если почта некорректна
+        }
+
+        if (email && !email.includes('@')) {
+            alert("Пожалуйста, введите корректную почту"); // Сообщение об ошибке
+            return; // Прерываем выполнение, если почта некорректна
+        }
+
+        // Отправка данных на сервер
+        try {
+            const response = await fetch('http://localhost:3000/create-account', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ email, nickname, password }),
+            });
+
+            if (response.ok) {
+                const data = await response.json();
+                alert("Аккаунт успешно создан!");
+                console.log(data);
+
+                // Сброс форм
+                document.getElementById('email-input').value = '';
+                document.getElementById('nickname-input').value = '';
+                document.getElementById('password-input').value = '';
+
+                // Перезагрузка страницы
+                setTimeout(() => location.reload(), 100); // Задержка перед перезагрузкой
+            } else {
+                alert("Ошибка при создании аккаунта.");
+            }
+        } catch (error) {
+            console.error("Ошибка:", error);
+            alert("Ошибка при соединении с сервером.");
+        }
+    } else {
+        alert("Пожалуйста, заполните либо почту и пароль, либо ник и пароль.");
+    }
+});
+
+       /* для доменчика
+       function goBack() {
+           window.history.back(); // Возвращаемся на предыдущую страницу
+       }*/
+       function goBack() {
+        window.close().href = 'sitik.html'; // Замените 'index.html' на путь к вашей главной странице
+       }
+        
+      
+    
+</script>
+
+
+    
+</body>
+</html>

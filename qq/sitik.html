@@ -1,0 +1,757 @@
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            background: linear-gradient(to right, #fbc2eb, #a6c1ee);
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .container1 {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 40px;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 25vh; /* Уменьшаем отступ снизу, чтобы поднять контейнер */
+}
+        .container2{
+            display: flex;
+            flex-direction: column;
+            flex-wrap:wrap;
+            gap: 20px;
+            justify-content: center;
+            align-items: center;
+            margin-top: 25vh;
+        }
+
+        .mini_box{
+            display: flex;
+            background-color: white;
+            border-radius: 20px;
+            flex-direction: column;
+            flex-wrap:wrap;
+            gap: 20px;
+            justify-content: center;
+            align-items: center;
+            width: 100px;
+            height: 100px;
+        }
+
+        .minibox{
+            
+            width: 100px;
+            height: 100px;
+        }
+
+        .box {
+            background-color: #ffffff;
+            border-radius: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            
+        }
+        .box.large {
+            width: 200px;
+            height: 250px;
+            z-index: -1;
+        }
+        .box.medium {
+            width: 220px;
+            height: 130px;
+            z-index: -1;
+        }
+        .box.small {
+            width: 100px;
+            height: 100px;
+            z-index: -1;
+        }
+        .box.gradient {
+            background: linear-gradient(to bottom, #f3b1e0, #9fbef5);
+        }
+        .close-btn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            font-size: 16px;
+            color: #888888;
+            cursor: pointer;
+        }
+    .close-btn-mini-boxes{
+        position: relative;
+            top: -30px;
+            right: -35px;
+            font-size: 16px;
+            color: #888888;
+            cursor: pointer;
+    }
+
+        #text{
+            color: #4fa3ca;
+            font-weight: bolder;
+            font-size: 20px;
+            position: absolute;
+            top: 44px;
+        }
+        #headerDIV {
+        background: linear-gradient(to top right,  #f4aadf, #95bcfe);
+        border-radius: 0 0 20px 20px;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        
+}
+
+.miniboxes {
+    position: absolute; /* Позволяет позиционировать контейнер относительно родителя */
+    bottom: 100px; /* Прикрепляем к нижней части страницы */
+    left: 48%; /* Центрируем по горизонтали */
+    transform: translateX(-50%); /* Сдвигаем влево на половину ширины контейнера */
+    display: flex; /* Используем flexbox для размещения боксов */
+    justify-content: space-around; /* Распределяем пространство между боками */
+    width: 60%; /* Ширина контейнера на всю страницу */
+    padding-bottom: 15vh; /* Добавляем отступы */
+    z-index: -1;
+}
+
+.left{
+    background-color: transparent;
+    color: white;
+    border: none;
+    border-radius: 15px;
+    font-weight:bolder;
+    font-size: 30px;
+    width: 50px;
+    height: 40px;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 20px;
+    margin-top: 20px;
+    margin-left: 10px;   
+}
+#exit{
+    position: sticky;
+     background-color: transparent;
+    border: none;
+    border-radius: 15px;
+    font-weight:bolder;
+    font-size: 30px;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 20px;
+    margin-top: 20px;
+    
+    
+}
+.right {
+    
+    position: relative; /* Оставляем позицию относительно */
+    left: 75%; /* Позиционирование */
+    background-color: transparent;
+    color: white;
+    border: none;
+    border-radius: 15px;
+    font-weight: bolder;
+    font-size: 30px;
+    width: 50px; /* Ширина кнопки */
+    height: 40px; /* Высота кнопки */
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 20px;
+    margin-top: 20px;
+}
+
+
+.icon{
+  position: relative;
+  right: -1000px;
+  bottom: -5px;
+  font: inherit;
+  background-color: #f0f0f0;
+  border: 1;
+  border-color: #4fa3ca;
+  color: #242424;
+  border-radius: 0.5em;
+  font-size: 1.35rem;
+  padding: 0.375em 1em;
+  font-weight: 600;
+  text-shadow: 0 0.0625em 0 #fff;
+  transition: 0.15s ease;
+  cursor: pointer;
+}
+.icon:active {
+  translate: 0 0.225em;
+  box-shadow: inset 0 0.03em 0 0 #f4f4f4, 0 0.03em 0 0 #efefef,
+    0 0.0625em 0 0 #ececec, 0 0.125em 0 0 #e0e0e0, 0 0.125em 0 0 #dedede,
+    0 0.2em 0 0 #dcdcdc, 0 0.225em 0 0 #cacaca, 0 0.225em 0.375em 0 #cecece;
+}
+.woln{
+position: absolute;
+width: 100%;
+height: 100vh;
+overflow: hidden;
+}
+section .wave{
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 80px;
+    background: url(/qq/wave.png);
+    background-size: 1000px 100px;
+}
+section .wave.wave1{
+    animation: animate 30s linear infinite;
+    z-index: 100;
+    opacity: 1;
+    animation-delay: 0s;
+    bottom: 0;
+}
+section .wave.wave2{
+    animation: animate2 15s linear infinite;
+    z-index: 99;
+    opacity: 0,5;
+    animation-delay: -5s;
+    bottom: 10px;
+}
+section .wave.wave3{
+    animation: animate 30s linear infinite;
+    z-index: 98;
+    opacity: 0.2;
+    animation-delay: -2s;
+    bottom: 15;
+}
+section .wave.wave4{
+    animation: animate2 5s linear infinite;
+    z-index: 97;
+    opacity: 0,7;
+    animation-delay: -5s;
+    bottom: 20px;
+}
+@keyframes animate{
+    0%{
+        background-position-x: 0;
+    }
+    100%{
+        background-position-x: 1000px;
+    }
+}
+@keyframes animate2{
+    0%{
+        background-position-x: 0;
+    }
+    100%{
+        background-position-x: -1000px;
+    }
+}
+
+#closeZzz{
+    position: relative;
+    bottom: 33px;
+    left: 36px;
+    color: #888888;
+}
+.on_off{
+    position: relative;
+    width: 40;
+    top: 2;
+    right: 3;
+}
+.cardContainer {
+  width: fit-content;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.card {
+    position: relative;
+    right: -30;
+    bottom: 100;
+    width: 200px;
+    height: 250px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    /* padding: 20px 10px; */
+    border-radius: 20px;
+    backdrop-filter: blur(30px);
+    background-color: rgba(65, 65, 65, 0.308);
+    border: 1px solid rgba(255, 255, 255, 0.089);
+    cursor: pointer;
+    z-index: -1;
+}
+
+.city {
+  font-weight: 700;
+  font-size: 0.9em;
+  letter-spacing: 1.2px;
+  color: white;
+}
+
+.weather {
+  font-weight: 500;
+  font-size: 2px;
+  letter-spacing: 1.2px;
+  color: rgb(197, 197, 197);
+}
+
+.temp {
+  font-size: 1.8em;
+  color: white;
+}
+
+.minmaxContainer {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.min,
+.max {
+  width: 50%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  justify-content: center;
+  padding: 0px 20px;
+  gap: 4px;
+}
+
+.max {
+  align-items: flex-start;
+  border-left: 2px solid white;
+}
+
+.maxHeading,
+.minHeading {
+  font-size: 0.7em;
+  font-weight: 600;
+  color: white;
+}
+
+.maxTemp,
+.minTemp {
+  font-size: 0.6em;
+  font-weight: 500;
+  color: rgb(255, 255, 255);
+}
+
+.cardContainer::before {
+    width: 100px;
+    height: 100px;
+    content: "";
+    position: relative;
+    background-color: rgb(243 253 4);
+    z-index: -1;
+    border-radius: 50%;
+    bottom: 100;
+    left: 200;
+    /* left: 100px; */
+    /* top: 50px; */
+    transition: all 1s;
+}
+
+.cardContainer:hover::before {
+  transform: translate(-50px, 50px);
+  background-color: rgb(4, 0, 75);
+}
+  #languageMenu {
+            display: none; /* Скрываем меню по умолчанию */
+            position: absolute;
+            background-color: white;
+            border-radius: 5px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            z-index: 1000;
+        }
+        .languageOption {
+            padding: 10px;
+            cursor: pointer;
+        }
+        .languageOption:hover {
+            background-color: #f0f0f0;
+        }
+
+        .getWeather{
+            position: relative;
+            right: 420;
+            top: 250;
+            background-color: transparent;
+            padding: 7;
+            border-radius: 20px;
+            font-weight: 800;
+        }
+        .getWeather:hover{
+        transform: scale(1.13);
+        
+        }
+        .getWeather:active{
+        transform: scale(0.95);
+        }
+        .open-modal {
+            padding: 10px 20px 0px 50px;
+            font-size: 36px;
+            cursor: pointer;
+            background-color: transparent;
+            border: none;
+            font-weight: 800;
+            color:white;
+        }
+        .modal {
+            display: none; /* Скрыто по умолчанию */
+            position: fixed; /* Оверлей на весь экран */
+            top: 0;
+            left: 0;
+            width: 100%; /* Ширина на весь экран */
+            height: 100%; /* Высота на весь экран */
+            background-color: rgba(0, 0, 0, 0.5); /* Полупрозрачный фон */
+            justify-content: center; /* Центрируем содержимое */
+            align-items: center; /* Центрируем содержимое */
+            z-index: 1000;
+            
+        }
+        .modal-content {
+            background-color: white; /* Белый фон для содержимого */
+            width: 50%; /* Ширина модального окна */
+           /* height: 50%;  Высота модального окна */
+            padding: 20px; /* Отступы внутри модального окна */
+            border-radius: 10px; /* Закругленные углы */
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Тень для модального окна */
+            
+        }
+        .close-modal {
+            cursor: pointer;
+            color: #888888;
+            float: right; /* Правый край */
+            
+        }
+        #obrashenie{
+            
+            font-size:x-large;
+            text-align: justify;
+        }
+        #start_obrasheniya{
+            
+            text-align: center;
+        }
+        .container{
+        width: 70px;
+        height: 40px;
+        position: relative;
+        }
+.label {
+  height: 40px;
+  width: 100%;
+  background-color: #ffffff;
+  border-radius: 30px;
+  -webkit-box-shadow: inset 0 0 5px 4px rgba(255, 255, 255, 1),
+    inset 0 0 20px 1px rgba(0, 0, 0, 0.488), 10px 20px 30px rgba(0, 0, 0, 0.096),
+    inset 0 0 0 3px rgba(0, 0, 0, 0.3);
+  box-shadow: inset 0 0 5px 4px rgba(255, 255, 255, 1),
+    inset 0 0 20px 1px rgba(0, 0, 0, 0.488), 10px 20px 30px rgba(0, 0, 0, 0.096),
+    inset 0 0 0 3px rgba(0, 0, 0, 0.3);
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  position: relative;
+  right: -1340;
+  top: -40;
+  transition: transform 0.4s;
+}
+
+#checkbox{
+  display: none;
+}
+
+#checkbox:checked ~ .label::before {
+  left: 40px;
+  background-color: #000000;
+  background-image: linear-gradient(315deg, #000000 0%, #414141 70%)
+}
+
+.label::before {
+  position: absolute;
+  content: "";
+  height: 20px;
+  width: 20px;
+  border-radius: 50%;
+  left: 10px;
+  background-color: #000000;
+  background-image: linear-gradient(
+ 130deg,
+ #757272 10%,
+ #ffffff 11%,
+ #726f6f 62%);
+ transition: left 0.4s, background-color 0.4s, background-image 0.4s;
+ box-shadow: 0 2px 1px rgba(0, 0, 0, 0.3), 10px 10px 10px rgba(0, 0, 0, 0.3);
+}
+
+.dark-background {
+    background: linear-gradient(to bottom right, #333333, #444444);
+}
+
+.dark-header {
+    background: #222222; /* Dark background for header */
+    
+}
+
+.getWeather.active {
+    color: white; /* White text for Get Weather button */
+}
+
+/* Glowing effect for boxes */
+.box {
+    border: 2px solid transparent; /* Initial border */
+    transition: border 0.3s ease; /* Smooth transition for border */
+}
+
+.box.glow {
+    border: 2px solid white; /* White border when glowing */
+    box-shadow: 0 0 10px white; /* Glow effect */
+}
+/*! https://techrocks.ru/2021/04/12/pure-html-and-css-background-animations/ 
+https://www.youtube.com/watch?v=pKuvi9t4D4Y
+https://www.youtube.com/watch?v=MMNEEdGa5eE
+
+
+https://uiverse.io/Type-Delta/happy-mule-45
+*/
+
+    </style>
+</head>
+<body>
+   
+    
+    <div id="headerDIV">
+       
+        <button class="open-modal" >О нас</button>
+        <div class="modal" id="myModal">
+            <div class="modal-content">
+                <span class="close-modal" id="closeModal">&times;</span>
+                <h2 id="start_obrasheniya">По-подробнее о сайте</h2>
+                <p id="obrashenie">Данный сайт с бесплатной метеорологической информацией создал инди-разработчик, обучающийся на 3 курсе техникума как собственный проект. API для сайта предоставил openweathermap.org. Для обратной связи или предложений по улучшению проекта, просьба написать <strong>thwx.playa@bk.ru</strong></p>
+            </div>
+        </div>
+
+
+        
+            
+            <a class="" href="autorization.html" target="_blank">
+                <button class="icon">Login</button>
+            </a>
+            
+            <div class="container">
+                <input type="checkbox" name="checkbox" id="checkbox" />
+                <label for="checkbox" class="label"> </label>
+              </div>
+            
+
+        </div>
+    
+        
+
+    <div class="container1">
+        <div class="box large">
+            
+            <span>Прогнозы для мероприятий</span> <!--Создайте раздел, где пользователи могут вводить дату и место мероприятия, чтобы получить прогноз погоды на этот день. Это может быть полезно для планирования пикников, свадеб или других мероприятий на открытом воздухе-->
+        </div>
+
+        
+
+        <div class="container2">
+            <div class="box medium">
+                
+                <span>Персонализированные уведомления</span> <!--Добавьте возможность подписки на уведомления о погоде. Пользователи могут получать уведомления о значительных изменениях погоды, таких как штормы или сильный дождь, что улучшает их взаимодействие с сайтом-->
+            </div>
+            <div class="container1">
+                <div class="box small">
+                    <span class="close-btn">×</span>
+                </div>
+                <div class="box small">
+                    <span class="close-btn">×</span>
+                </div>
+            </div>
+        </div>
+
+        
+        
+        
+    
+
+   
+
+<div class="miniboxes">
+
+    <div class="box small"> <!-- скопировал с класса маленького бокса -->
+        <div id="closeZzz">
+            <span >×</span>
+        </div>
+    </div>
+    <div class="box small">
+        <div id="closeZzz">
+            <span >×</span>
+        </div>
+    </div>
+    <div class="box small">
+        <div id="closeZzz">
+            <span >×</span>
+        </div>
+    </div>
+    <div class="box small">
+        <div id="closeZzz">
+            <span >×</span>
+        </div>
+    </div>
+    <div class="box small">
+        <div id="closeZzz">
+            <span >×</span>
+        </div>
+    </div>
+ </div>
+</div>
+    
+<section>
+    <div class="wave wave1"></div>
+    <div class="wave wave2"></div>
+    <div class="wave wave3"></div>
+    <div class="wave wave4"></div>
+</section>
+
+
+<div class="cardContainer">
+    <div class="card">
+      <p class="city">MOSCOW</p>
+      <p class="weather"></p>
+      <svg
+        class="weather"
+        version="1.1"
+        id="Layer_1"
+        x="0px"
+        y="0px"
+        width="50px"
+        height="50px"
+        viewBox="0 0 100 100"
+        xml:space="preserve"
+      >
+        <image
+          id="image0"
+          width="100"
+          height="100"
+          x="0"
+          y="0"
+          href="data:image/png;base64,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"
+        ></image>
+      </svg>
+      <p class="temp" id="temp">32°</p>
+      <div class="minmaxContainer">
+        <div class="min">
+          <p class="minHeading">Min</p>
+          <p class="minTemp">30°</p>
+        </div>
+        <div class="max">
+          <p class="maxHeading">Max</p>
+          <p class="maxTemp">32°</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <button class="getWeather" onclick="getWeather()">GETWEATHER</button>
+  <script>
+    async function getWeather() {
+    try {
+        const response = await axios.get(`https://api.openweathermap.org/data/2.5/weather?q=Moscow&units=metric&appid=622e30920336534502786703d23c876c`);
+        console.log(response);  
+        
+        // Call changeTemp with the response data
+        changeTemp(response.data);
+    } catch (err) {
+        console.error(err.toJSON());
+    }
+}
+
+function changeTemp(data) {
+    const tempElement = document.getElementById('temp');
+    tempElement.textContent = `${data.main.temp} °C`; // Assuming temperature is in Kelvin, you might want to convert it
+}
+
+// Call getWeather when needed, for example, on button click or page load
+document.querySelector('.getWeather').addEventListener('click', getWeather);
+
+        //     document.addEventListener('DOMContentLoaded', (event) => {
+        //     getWeather(); // Вызов функции при загрузке страницы
+        // });
+  </script>
+
+  <!--js для окна-->
+  <script>
+    
+        // Получаем элементы
+        const modal = document.getElementById('myModal');
+        const openModalButton = document.querySelector('.open-modal');
+        const closeModalButton = document.getElementById('closeModal');
+
+        // Открываем модальное окно
+        openModalButton.onclick = function() {
+            modal.style.display = 'flex'; // Показываем модальное окно
+        }
+
+        // Закрываем модальное окно
+        closeModalButton.onclick = function() {
+            modal.style.display = 'none'; // Скрываем модальное окно
+        }
+
+        // Закрытие при клике вне модального окна
+        window.onclick = function(event) {
+            if (event.target === modal) {
+                modal.style.display = 'none'; // Скрываем модальное окно
+            }
+        }
+    
+        
+            const checkbox = document.getElementById('checkbox');
+            const headerDIV = document.getElementById('headerDIV');
+            const getWeatherButton = document.querySelector('.getWeather');
+            const boxes = document.querySelectorAll('.box');
+
+            checkbox.addEventListener('change', () => {
+                if (checkbox.checked) {
+                    document.body.classList.add('dark-background'); // Add dark background
+                    headerDIV.classList.add('dark-header'); // Change header background to dark
+                    getWeatherButton.classList.add('active'); // Change button text color
+
+                    // Add glowing effect to all boxes
+                    boxes.forEach(box => {
+                        box.classList.add('glow');
+                    });
+                } else {
+                    document.body.classList.remove('dark-background'); // Remove dark background
+                    headerDIV.classList.remove('dark-header'); // Reset header background
+                    getWeatherButton.classList.remove('active'); // Reset button text color
+
+                    // Remove glowing effect from all boxes
+                    boxes.forEach(box => {
+                        box.classList.remove('glow');
+                    });
+                }
+            });
+        
+
+  </script>
+
+</body>
+</html>
+
